@@ -72,7 +72,6 @@ def main():
     ║  URL:      http://localhost:{port}                       ║
     ║  Docs:    http://localhost:{port}/docs                   ║
     ║  Version: {settings.facebook_api_version}                 ║
-    ║  Account: {settings.facebook_account_id}                 ║
     ╚══════════════════════════════════════════════════════════╝
     """
     )
