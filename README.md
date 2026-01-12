@@ -608,6 +608,27 @@ facebook-ads-proxy/
 
 ---
 
+## 📚 Documentação Completa
+
+Além deste README, o projeto possui documentação detalhada:
+
+| Arquivo | Descrição |
+|---------|-----------|
+| **[GUIDE.md](GUIDE.md)** | 📖 Guia completo de instalação, configuração e uso |
+| **[AGENTS.md](AGENTS.md)** | 🤖 Integração com Claude Code Agents |
+| **[EXAMPLES.md](EXAMPLES.md)** | 💡 Exemplos práticos (curl, Python scripts) |
+| **[CHANGELOG.md](CHANGELOG.md)** | 📝 Histórico de versões e roadmap |
+| **[CONTRIBUTING.md](CONTRIBUTING.md)** | 🤝 Guia para contribuidores |
+
+### 📖 Guia Rápido
+
+- **Novo no projeto?** Comece pelo [GUIDE.md](GUIDE.md)
+- **Usando Claude Code?** Veja [AGENTS.md](AGENTS.md)
+- **Precisa de exemplos?** Consulte [EXAMPLES.md](EXAMPLES.md)
+- **Quer contribuir?** Leia [CONTRIBUTING.md](CONTRIBUTING.md)
+
+---
+
 ## 🔐 Segurança
 
 - ✅ Credenciais **nunca** são expostas para o Agent
