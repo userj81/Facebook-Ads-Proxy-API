@@ -319,46 +319,223 @@ FROM calls;
 
 ---
 
-## 🔧 Integração com Claude Code
+## 🤖 USANDO COM CLAUDE CODE AGENTS
 
-### Como o Agent Usa Este Proxy
+Esta é a **forma mais poderosa** de usar o Facebook Ads Proxy API. Você tem agents especializados que automatizam tarefas complexas sem nunca expor suas credenciais.
 
-Quando você pede ao Claude Code para "criar uma campanha" ou "buscar relatórios", o Agent:
+---
 
-1. **Decide** o que fazer (ex: criar campanha)
-2. **Prepara** o request completo com endpoint, método, body
-3. **Chama** este proxy via `http://localhost:XXXXX/facebook-ads/proxy`
-4. **Recebe** a resposta da Meta API
-5. **Processa** e te mostra o resultado
+### 🎯 O Que São Claude Code Agents?
 
-**O Agent NUNCA vê suas credenciais** - elas ficam apenas no `.env` deste proxy.
+**Agents** são especialistas automatizados que você pode "contratar" para fazer tarefas específicas. Eles:
 
-### Exemplo de Fluxo Completo
+- 🎯 **Entendem linguagem natural** - você pede em português
+- 🔧 **Executam tarefas complexas** - criam campanhas, geram relatórios, etc.
+- 🔐 **NUNCA veem suas credenciais** - usam este proxy como intermediário
+- 📊 **Retornam resultados formatados** - relatórios prontos, insights, etc.
+
+---
+
+### 📋 Seus Agents Disponíveis
+
+Você tem **2 agents** especializados em Facebook Ads:
+
+#### 1. Facebook Ads Operator (Agent)
+**Localização:** `~/.claude/agents/facebook-ads-agent/`
+
+**O que faz:**
+- ✅ Cria campanhas de anúncios
+- ✅ Cria ad sets com targeting
+- ✅ Cria e gerencia anúncios
+- ✅ Pausa, atualiza ou deleta campanhas
+- ✅ Monitora performance
+
+**Exemplos de uso:**
+```
+"Cria uma campanha chamada 'Black Friday' com objetivo de vendas"
+"Cria um ad set com budget de $500, targeting Brasil e maiores de 18"
+"Me mostra o performance dos últimos 7 dias da campanha 123"
+"Pausa a campanha 'Black Friday'"
+```
+
+---
+
+#### 2. Facebook Ads Reports Generator (Agent)
+**Localização:** `~/.claude/agents/facebook-ads-reports-agent/`
+
+**O que faz:**
+- ✅ Gera relatórios automáticos completos
+- ✅ Analisa todas as campanhas, ad sets e ads
+- ✅ Calcula métricas avançadas (ROI, ROAS, CPA, CTR)
+- ✅ Identifica top performers e underperformers
+- ✅ Gera recomendações acionáveis
+
+**Exemplos de uso:**
+```
+"Gera relatório dos últimos 7 dias"
+"Analisa em detalhe a campanha Black Friday"
+"Compara últimos 7 dias com 7 dias anteriores"
+"Quais são as campanhas com pior performance?"
+```
+
+---
+
+### 🚀 Como Usar os Agents
+
+#### Passo 1: Iniciar o Proxy
+
+**PRIMEIRO**, sempre inicie o proxy:
+
+```bash
+cd /Users/jairflores/Downloads/agents/facebook-ads-proxy
+./start.sh
+```
+
+Aguarde o mensagem com a porta (ex: `http://localhost:63309`).
+
+#### Passo 2: Usar o Agent
+
+No Claude Code, simplesmente converse em português:
 
 ```
-Você: "Cria uma campanha chamada 'Black Friday' com objetivo de vendas"
-         ↓
-Claude Agent: Prepara request
-  {
-    "endpoint": "/v24.0/act_123456/campaigns",
-    "method": "POST",
-    "body": {
-      "name": "Black Friday",
-      "objective": "OUTCOME_SALES",
-      "status": "PAUSED"
-    }
-  }
-         ↓
-Claude Agent: Faz POST para http://localhost:XXXXX/facebook-ads/proxy
-         ↓
-Proxy: Recebe, injeta credencial, chama Meta API
-         ↓
-Meta API: Cria campanha, retorna ID
-         ↓
-Proxy: Salva no SQLite, retorna resposta
-         ↓
-Claude Agent: Mostra "✅ Campanha criada! ID: 23843663654630"
+Você: "Gera relatório dos últimos 7 dias"
 ```
+
+O Agent automaticamente:
+1. ✅ Descobre a porta do proxy
+2. ✅ Lista todas as campanhas
+3. ✅ Busca insights de cada uma
+4. ✅ Calcula métricas (ROI, ROAS, CPA)
+5. ✅ Identifica top/bottom performers
+6. ✅ Gera relatório markdown profissional
+7. ✅ Salva em `~/.claude/reports/facebook-ads/`
+
+**Resultado:**
+```markdown
+# Facebook Ads Report - 2026-01-13
+
+## 📊 Overview
+| Total Spend | $5,234.56 |
+| Conversions | 234 |
+| ROI | 245% |
+
+## 🏆 Top 5 Campanhas
+1. Black Friday - ROI: 450%
+2. Summer Sale - ROI: 320%
+...
+
+## 💡 Recomendações
+- ✅ Black Friday: aumentar budget
+- ❌ Test Campaign: pausar (0 conversões)
+```
+
+---
+
+### 🎓 Exemplos Completos de Uso
+
+#### Criar Campanha Completa
+
+```
+Você: "Cria uma campanha completa para Black Friday"
+
+Claude Agent:
+1. Cria a campanha (status: PAUSED)
+2. Cria um ad set com targeting Brasil
+3. Cria um criativo com imagem
+4. Cria o anúncio
+5. Mostra: "✅ Campanha criada! ID: 23843663654630"
+   "Use este comando para ativar: ..."
+```
+
+---
+
+#### Analisar Performance
+
+```
+Você: "Qual campanha está dando melhor ROI?"
+
+Claude Agent:
+1. Busca insights de todas as campanhas
+2. Calcula ROI de cada uma
+3. Mostra ranking completo:
+   "🏆 Melhor ROI: Black Friday (450%)"
+   "   Pior ROI: Test Campaign (0%)"
+```
+
+---
+
+#### Relatório Comparativo
+
+```
+Você: "Compara esta semana com semana passada"
+
+Claude Agent:
+1. Busca insights dos últimos 7 dias
+2. Busca insights de 7 dias atrás
+3. Calcula diferenças
+4. Gera relatório:
+   "📈 Spend: +15%"
+   "📈 Conversions: +23%"
+   "📉 CPA: -8% (melhorou!)"
+```
+
+---
+
+### 🔧 Skills Disponíveis
+
+Seus agents usam **Skills** para consultar documentação da Meta API:
+
+| Skill | Descrição |
+|-------|-----------|
+| **Meta Ads API v24.0 Reference** | Documentação completa para criar campanhas, ad sets, anúncios |
+| **Facebook Ads Reports Expert** | Referência de insights, métricas e relatórios |
+
+As skills garantem que os agents sempre usam os endpoints corretos e parâmetros válidos.
+
+---
+
+### 📖 Documentação Completa
+
+Para mais detalhes sobre agents e skills, consulte:
+
+**Guia Completo:** `~/.claude/docs/AGENTS-AND-SKILLS-GUIDE.md`
+
+Este guia contém:
+- Documentação completa de todos os agents
+- Documentação completa de todas as skills
+- Como configurar cada um
+- Exemplos de uso avançados
+- Troubleshooting
+
+---
+
+### ✅ Checklist de Uso
+
+Antes de usar os agents:
+
+1. **[ ] Proxy rodando?**
+   ```bash
+   cd /Users/jairflores/Downloads/agents/facebook-ads-proxy
+   ./start.sh
+   ```
+
+2. **[ ] Credenciais configuradas?**
+   ```bash
+   # Edite o .env do proxy com suas credenciais reais
+   nano .env
+   ```
+
+3. **[ ] Agent adicionado?**
+   ```
+   No Claude Code, o agent deve estar ativo automaticamente
+   ```
+
+4. **[ ] Faça seu pedido em português!**
+   ```
+   "Gera relatório dos últimos 30 dias"
+   "Cria campanha para Natal"
+   "Qual ad set está com pior CTR?"
+   ```
 
 ---
 
@@ -381,6 +558,15 @@ https://developers.facebook.com/tools/accesstoken/
 Mude `PROXY_PORT=0` para uma porta específica no `.env`:
 ```bash
 PROXY_PORT=8080
+```
+
+### Erro: "Proxy não encontrado" (no Agent)
+
+**Solução:**
+```bash
+# Inicie o proxy primeiro
+cd /Users/jairflores/Downloads/agents/facebook-ads-proxy
+./start.sh
 ```
 
 ### Verificar se o servidor está rodando
@@ -440,6 +626,14 @@ MIT
 ## 🤝 Contribuindo
 
 Este é um projeto privado para automação de Facebook Ads. Sinta-se livre para adaptar para suas necessidades.
+
+---
+
+## 📞 Links Úteis
+
+- **GitHub:** https://github.com/userj81/Facebook-Ads-Proxy-API
+- **Guia de Agents/Skills:** `~/.claude/docs/AGENTS-AND-SKILLS-GUIDE.md`
+- **Meta API Docs:** https://developers.facebook.com/docs/marketing-api/
 
 ---
 
