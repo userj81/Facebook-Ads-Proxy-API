@@ -1,0 +1,40 @@
+{
+  "accounts": {
+    "gold_fardamentos": "act_449528298470895",
+    "gold": "act_449528298470895",
+    "jair_neto": "act_1401501356746516",
+    "jessica_modas": "act_457950980980661",
+    "jessica": "act_457950980980661",
+    "keren_psi": "act_680459691993544",
+    "keren": "act_680459691993544",
+    "lola_tshirts": "act_1044862018931224",
+    "lola": "act_1044862018931224",
+    "lola_brand": "act_1044862018931224",
+    "dra_luma_aiub": "act_714436689329137",
+    "dra_luma": "act_714436689329137",
+    "luma_aiub": "act_714436689329137",
+    "ipromanaus": "act_294833282269973",
+    "griffin": "act_351915916329416",
+    "griffin1": "act_351915916329416",
+    "decora_luz": "act_2891589781153099",
+    "decora": "act_2891589781153099",
+    "cdl_laboratorios": "act_1091374365106781",
+    "cdl": "act_1091374365106781",
+    "anuncios_seculo": "act_1951872598339982",
+    "seculo": "act_1951872598339982",
+    "wellness_hub": "act_738814120999934",
+    "wellness": "act_738814120999934",
+    "fechecler": "act_1449765762218076",
+    "king_suplementos_bm2": "act_674481151051178",
+    "king_bm2": "act_674481151051178",
+    "amazon_laje": "act_159322673389929",
+    "apl_boutique": "act_215451841145559",
+    "apl": "act_215451841145559"
+  },
+  "metadata": {
+    "total": 26,
+    "active": 22,
+    "inactive": 4,
+    "last_updated": "2026-01-13"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "templates": [
+    {
+      "id": "vendas_simple",
+      "name": "Vendas Simples",
+      "objective": "OUTCOME_SALES",
+      "description": "Campanha de conversão com pixel de purchase",
+      "use_cases": ["E-commerce", "Vendas online", "Landing pages"]
+    },
+    {
+      "id": "lead_generation",
+      "name": "Geração de Leads",
+      "objective": "OUTCOME_LEADS",
+      "description": "Captura de leads com formulário nativo Facebook",
+      "use_cases": ["Captura de emails", "Qualificação", "Download de materiais"]
+    },
+    {
+      "id": "trafego_whatsapp",
+      "name": "Tráfego WhatsApp",
+      "objective": "OUTCOME_TRAFFIC",
+      "description": "Direciona tráfego para conversas no WhatsApp",
+      "use_cases": ["Consultorias", "Serviços", "Atendimento comercial"]
+    },
+    {
+      "id": "engajamento_instagram",
+      "name": "Engajamento Instagram",
+      "objective": "OUTCOME_ENGAGEMENT",
+      "description": "Aumenta curtidas e engajamento no Instagram",
+      "use_cases": ["Marca pessoal", "Seguidores", "Brand awareness"]
+    }
+  ],
+  "metadata": {
+    "total": 4,
+    "last_updated": "2026-01-13",
+    "api_version": "v24.0"
+  }
+}

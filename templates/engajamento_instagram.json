@@ -1,0 +1,104 @@
+{
+  "template_id": "engajamento_instagram",
+  "name": "Engajamento - Instagram",
+  "description": "Template para campanha de engajamento no Instagram (curtidas, comentários)",
+  "objective": "OUTCOME_ENGAGEMENT",
+  "flow": [
+    {
+      "step": 1,
+      "action": "create_campaign",
+      "endpoint": "/{api_version}/{account_id}/campaigns",
+      "method": "POST",
+      "body": {
+        "name": "{{campaign_name}}",
+        "objective": "OUTCOME_ENGAGEMENT",
+        "status": "PAUSED",
+        "special_ad_categories": []
+      },
+      "save_as": "campaign_id"
+    },
+    {
+      "step": 2,
+      "action": "create_adset",
+      "endpoint": "/{api_version}/{campaign_id}/adsets",
+      "method": "POST",
+      "body": {
+        "name": "{{adset_name}}",
+        "campaign_id": "{{campaign_id}}",
+        "optimization_goal": "POST_ENGAGEMENT",
+        "billing_event": "IMPRESSIONS",
+        "targeting": {
+          "geo_locations": {
+            "countries": ["BR"]
+          },
+          "age_min": 18,
+          "age_max": 45,
+          "genders": [1, 2],
+          "publisher_platforms": ["instagram"],
+          "device_platforms": ["mobile"],
+          "instagram_positions": ["stream", "story", "explore"]
+        },
+        "status": "PAUSED",
+        "promoted_object": {
+          "page_id": "{{page_id}}"
+        }
+      },
+      "save_as": "adset_id"
+    },
+    {
+      "step": 3,
+      "action": "create_creative",
+      "endpoint": "/{api_version}/{account_id}/adcreatives",
+      "method": "POST",
+      "body": {
+        "name": "{{creative_name}}",
+        "object_story_spec": {
+          "page_id": "{{page_id}}",
+          "link_data": {
+            "message": "{{ad_text}} {{hashtags}}",
+            "image_hash": "{{image_hash}}",
+            "call_to_action": {
+              "type": "LIKE_PAGE"
+            }
+          }
+        }
+      },
+      "save_as": "creative_id"
+    },
+    {
+      "step": 4,
+      "action": "create_ad",
+      "endpoint": "/{api_version}/{adset_id}/ads",
+      "method": "POST",
+      "body": {
+        "name": "{{ad_name}}",
+        "adset_id": "{{adset_id}}",
+        "creative": {"creative_id": "{{creative_id}}"},
+        "status": "PAUSED"
+      },
+      "save_as": "ad_id"
+    }
+  ],
+  "required_params": {
+    "campaign_name": "Nome da campanha",
+    "adset_name": "Nome do conjunto de anúncios",
+    "page_id": "ID da página do Facebook (vinculada ao Instagram)",
+    "creative_name": "Nome do criativo",
+    "ad_text": "Texto do anúncio",
+    "hashtags": "Hashtags relevantes",
+    "image_hash": "Hash da imagem",
+    "ad_name": "Nome do anúncio"
+  },
+  "examples": {
+    "minimal": {
+      "campaign_name": "Instagram - Seguidores",
+      "adset_name": "Instagram - 18-45 Mobile",
+      "page_id": "987654321",
+      "creative_name": "Criativo - Post Instagram",
+      "ad_text": "Siga nosso perfil e fique por dentro de todas as novidades! 📱✨",
+      "hashtags": "#moda #estilo #novidades #saopaulo #brasil",
+      "image_hash": "abcdef123456",
+      "ad_name": "Anúncio - Seguir Perfil"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "template_id": "trafego_whatsapp",
+  "name": "Tráfego para WhatsApp",
+  "description": "Template para campanha focada em direcionar tráfego para WhatsApp",
+  "objective": "OUTCOME_TRAFFIC",
+  "flow": [
+    {
+      "step": 1,
+      "action": "create_campaign",
+      "endpoint": "/{api_version}/{account_id}/campaigns",
+      "method": "POST",
+      "body": {
+        "name": "{{campaign_name}}",
+        "objective": "OUTCOME_TRAFFIC",
+        "status": "PAUSED",
+        "special_ad_categories": []
+      },
+      "save_as": "campaign_id"
+    },
+    {
+      "step": 2,
+      "action": "create_adset",
+      "endpoint": "/{api_version}/{campaign_id}/adsets",
+      "method": "POST",
+      "body": {
+        "name": "{{adset_name}}",
+        "campaign_id": "{{campaign_id}}",
+        "optimization_goal": "MESSAGES",
+        "billing_event": "IMPRESSIONS",
+        "targeting": {
+          "geo_locations": {
+            "countries": ["BR"]
+          },
+          "age_min": 18,
+          "age_max": 65,
+          "genders": [1, 2],
+          "publisher_platforms": ["facebook", "instagram"],
+          "device_platforms": ["mobile"],
+          "message_platforms": ["whatsapp"]
+        },
+        "status": "PAUSED",
+        "promoted_object": {
+          "page_id": "{{page_id}}"
+        }
+      },
+      "save_as": "adset_id"
+    },
+    {
+      "step": 3,
+      "action": "create_creative",
+      "endpoint": "/{api_version}/{account_id}/adcreatives",
+      "method": "POST",
+      "body": {
+        "name": "{{creative_name}}",
+        "object_story_spec": {
+          "page_id": "{{page_id}}",
+          "link_data": {
+            "message": "{{ad_text}}",
+            "call_to_action": {
+              "type": "WHATSAPP_MESSAGE",
+              "value": "{{whatsapp_number}}"
+            },
+            "image_hash": "{{image_hash}}"
+          }
+        }
+      },
+      "save_as": "creative_id"
+    },
+    {
+      "step": 4,
+      "action": "create_ad",
+      "endpoint": "/{api_version}/{adset_id}/ads",
+      "method": "POST",
+      "body": {
+        "name": "{{ad_name}}",
+        "adset_id": "{{adset_id}}",
+        "creative": {"creative_id": "{{creative_id}}"},
+        "status": "PAUSED"
+      },
+      "save_as": "ad_id"
+    }
+  ],
+  "required_params": {
+    "campaign_name": "Nome da campanha",
+    "adset_name": "Nome do conjunto de anúncios",
+    "page_id": "ID da página do Facebook",
+    "creative_name": "Nome do criativo",
+    "ad_text": "Texto do anúncio com CTA para WhatsApp",
+    "whatsapp_number": "Número do WhatsApp (formato: 5511999999999)",
+    "image_hash": "Hash da imagem",
+    "ad_name": "Nome do anúncio"
+  },
+  "examples": {
+    "minimal": {
+      "campaign_name": "WhatsApp - Consultoria",
+      "adset_name": "Brasil 18-65 Mobile",
+      "page_id": "987654321",
+      "creative_name": "Criativo - WhatsApp",
+      "ad_text": "💬 Fale com nossos especialistas agora mesmo! Clique no botão para iniciar a conversa no WhatsApp.",
+      "whatsapp_number": "5511999999999",
+      "image_hash": "abcdef123456",
+      "ad_name": "Anúncio - Conversa WhatsApp"
+    }
+  }
+}

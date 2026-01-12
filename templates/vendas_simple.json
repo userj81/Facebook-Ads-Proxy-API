@@ -1,0 +1,111 @@
+{
+  "template_id": "vendas_simple",
+  "name": "Vendas Simples - Conversão",
+  "description": "Template para campanha de vendas com objetivo de conversão",
+  "objective": "OUTCOME_SALES",
+  "flow": [
+    {
+      "step": 1,
+      "action": "create_campaign",
+      "endpoint": "/{api_version}/{account_id}/campaigns",
+      "method": "POST",
+      "body": {
+        "name": "{{campaign_name}}",
+        "objective": "OUTCOME_SALES",
+        "status": "PAUSED",
+        "special_ad_categories": [],
+        "daily_budget": "{{budget_in_cents}}"
+      },
+      "save_as": "campaign_id"
+    },
+    {
+      "step": 2,
+      "action": "create_adset",
+      "endpoint": "/{api_version}/{campaign_id}/adsets",
+      "method": "POST",
+      "body": {
+        "name": "{{adset_name}}",
+        "campaign_id": "{{campaign_id}}",
+        "daily_budget": "{{budget_in_cents}}",
+        "optimization_goal": "OFFSITE_CONVERSIONS",
+        "billing_event": "IMPRESSIONS",
+        "targeting": {
+          "geo_locations": {
+            "countries": ["BR"]
+          },
+          "age_min": 18,
+          "age_max": 65,
+          "genders": [1, 2],
+          "publisher_platforms": ["facebook", "instagram"],
+          "device_platforms": ["mobile"]
+        },
+        "status": "PAUSED",
+        "promoted_object": {
+          "pixel_id": "{{pixel_id}}",
+          "custom_event_type": "PURCHASE"
+        }
+      },
+      "save_as": "adset_id"
+    },
+    {
+      "step": 3,
+      "action": "create_creative",
+      "endpoint": "/{api_version}/{account_id}/adcreatives",
+      "method": "POST",
+      "body": {
+        "name": "{{creative_name}}",
+        "object_story_spec": {
+          "page_id": "{{page_id}}",
+          "link_data": {
+            "message": "{{ad_text}}",
+            "link": "{{landing_page}}",
+            "image_hash": "{{image_hash}}",
+            "call_to_action": {
+              "type": "SHOP_NOW"
+            }
+          }
+        }
+      },
+      "save_as": "creative_id"
+    },
+    {
+      "step": 4,
+      "action": "create_ad",
+      "endpoint": "/{api_version}/{adset_id}/ads",
+      "method": "POST",
+      "body": {
+        "name": "{{ad_name}}",
+        "adset_id": "{{adset_id}}",
+        "creative": {"creative_id": "{{creative_id}}"},
+        "status": "PAUSED"
+      },
+      "save_as": "ad_id"
+    }
+  ],
+  "required_params": {
+    "campaign_name": "Nome da campanha",
+    "budget_in_cents": "Orçamento diário em centavos (ex: 50000 = R$500)",
+    "adset_name": "Nome do conjunto de anúncios",
+    "pixel_id": "ID do pixel de conversão",
+    "page_id": "ID da página do Facebook",
+    "creative_name": "Nome do criativo",
+    "ad_text": "Texto do anúncio",
+    "landing_page": "URL da página de destino",
+    "image_hash": "Hash da imagem (fazer upload antes)",
+    "ad_name": "Nome do anúncio"
+  },
+  "examples": {
+    "minimal": {
+      "campaign_name": "Black Friday 2026",
+      "budget_in_cents": "50000",
+      "adset_name": "Ad Set - Brasil 18-65",
+      "pixel_id": "123456789",
+      "page_id": "987654321",
+      "creative_name": "Criativo - Promoção",
+      "ad_text": "Oferta imperdível! Aproveite ate 50% de desconto. Compre agora!",
+      "landing_page": "https://loja.com.br/promocao",
+      "image_hash": "abcdef123456",
+      "ad_name": "Anuncio - Principal"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "template_id": "lead_generation",
+  "name": "Geração de Leads",
+  "description": "Template para campanha focada em captura de leads (formulário nativo)",
+  "objective": "OUTCOME_LEADS",
+  "flow": [
+    {
+      "step": 1,
+      "action": "create_campaign",
+      "endpoint": "/{api_version}/{account_id}/campaigns",
+      "method": "POST",
+      "body": {
+        "name": "{{campaign_name}}",
+        "objective": "OUTCOME_LEADS",
+        "status": "PAUSED",
+        "special_ad_categories": []
+      },
+      "save_as": "campaign_id"
+    },
+    {
+      "step": 2,
+      "action": "create_leadgen_form",
+      "endpoint": "/{api_version}/{page_id}/leadgen_forms",
+      "method": "POST",
+      "body": {
+        "name": "{{form_name}}",
+        "customized_disclaimer": "{{disclaimer_text}}",
+        "context_card_ad_headline": "{{headline}}",
+        "questions": [
+          {
+            "type": "EMAIL",
+            "label": "E-mail"
+          },
+          {
+            "type": "PHONE",
+            "label": "Telefone"
+          }
+        ],
+        "follow_up_action_url": "{{thank_you_url}}"
+      },
+      "save_as": "form_id"
+    },
+    {
+      "step": 3,
+      "action": "create_adset",
+      "endpoint": "/{api_version}/{campaign_id}/adsets",
+      "method": "POST",
+      "body": {
+        "name": "{{adset_name}}",
+        "campaign_id": "{{campaign_id}}",
+        "optimization_goal": "LEADS",
+        "billing_event": "IMPRESSIONS",
+        "targeting": {
+          "geo_locations": {
+            "countries": ["BR"]
+          },
+          "age_min": 25,
+          "age_max": 60,
+          "genders": [2],
+          "publisher_platforms": ["facebook", "instagram"]
+        },
+        "status": "PAUSED",
+        "promoted_object": {
+          "page_id": "{{page_id}}"
+        }
+      },
+      "save_as": "adset_id"
+    },
+    {
+      "step": 4,
+      "action": "create_creative",
+      "endpoint": "/{api_version}/{account_id}/adcreatives",
+      "method": "POST",
+      "body": {
+        "name": "{{creative_name}}",
+        "object_story_spec": {
+          "page_id": "{{page_id}}",
+          "link_data": {
+            "message": "{{ad_text}}",
+            "lead_gen_form_id": "{{form_id}}",
+            "image_hash": "{{image_hash}}"
+          }
+        }
+      },
+      "save_as": "creative_id"
+    },
+    {
+      "step": 5,
+      "action": "create_ad",
+      "endpoint": "/{api_version}/{adset_id}/ads",
+      "method": "POST",
+      "body": {
+        "name": "{{ad_name}}",
+        "adset_id": "{{adset_id}}",
+        "creative": {"creative_id": "{{creative_id}}"},
+        "status": "PAUSED"
+      },
+      "save_as": "ad_id"
+    }
+  ],
+  "required_params": {
+    "campaign_name": "Nome da campanha",
+    "adset_name": "Nome do conjunto de anúncios",
+    "form_name": "Nome do formulário",
+    "headline": "Headline do anúncio",
+    "disclaimer_text": "Texto de disclaimer (opcional)",
+    "thank_you_url": "URL de agradecimento após formulário",
+    "page_id": "ID da página do Facebook",
+    "creative_name": "Nome do criativo",
+    "ad_text": "Texto do anúncio",
+    "image_hash": "Hash da imagem",
+    "ad_name": "Nome do anúncio"
+  },
+  "examples": {
+    "minimal": {
+      "campaign_name": "Leads - E-book Grátis",
+      "adset_name": "Mulheres 25-60 - Brasil",
+      "form_name": "Download E-book",
+      "headline": "Baixe agora nosso e-book gratuito!",
+      "disclaimer_text": "Seus dados estão seguros conosco.",
+      "thank_you_url": "https://site.com.br/obrigado",
+      "page_id": "987654321",
+      "creative_name": "Criativo - E-book",
+      "ad_text": "📚 E-book gratuito! Aprenda tudo sobre o assunto. Preencha o formulário e receba agora mesmo.",
+      "image_hash": "abcdef123456",
+      "ad_name": "Anúncio - Download E-book"
+    }
+  }
+}
